@@ -71,6 +71,7 @@ _minted*
 
 show_file.sh
 result/*
+logs/*
 # *.spec
 *.bak
 *.old
