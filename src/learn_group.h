@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstddef>
 #include <vector>
+#include <cstdio>
 #include <shared_mutex>
 #include "statistic.h"
 
@@ -20,7 +21,7 @@
 
 namespace combotree {
 
-// #define EXPAND_ALL
+//#define EXPAND_ALL
 
 static inline int CommonPrefixBytes(uint64_t a, uint64_t b) {
   // the result of clz is undefined if arg is 0
@@ -344,7 +345,8 @@ public:
             group_entrys_[i].~LearnGroup();
 #else
             groups_[i]->~LearnGroup();
-            NVM::data_alloc->Free(groups_[i], sizeof(LearnGroup)); 
+            NVM::data_alloc->Free(groups_[i], sizeof(LearnGroup));
+            while(i < nr_groups_ - 1 && groups_[i] == groups_[i+1]) i++;
 #endif
         }
 #ifdef EXPAND_ALL
@@ -494,7 +496,7 @@ public:
             max_groups_ = new_cap;
             nr_groups_ = new_entrys;
             groups_ = new_groups_;
-            NVM::data_alloc->Free(old_groups, old_cap * sizeof(LearnGroup *)); 
+            NVM::data_alloc->Free(old_groups, old_cap * sizeof(LearnGroup *));
         }
 
         std::vector<uint64_t> train_keys;
