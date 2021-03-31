@@ -696,9 +696,9 @@ public:
     void Info() {
         std::cout << "nr_groups: " << nr_groups_ << "\t";
         std::cout << "Group size:" << sizeof(LearnGroup) << "\t";
-        std::cout << "Find group: " << Common::stat.find_goups << ", " <<  Common::stat.find_pos 
+        std::cout << "Find group: " << Common::stat.find_groups << ", " <<  Common::stat.find_pos 
                << ", " <<  Common::stat.count << std::endl;
-        Common::stat.find_goups = Common::stat.find_pos = Common::stat.count = 0;
+        Common::stat.find_groups = Common::stat.find_pos = Common::stat.count = 0;
         clevel_mem_->Usage();
     }
 

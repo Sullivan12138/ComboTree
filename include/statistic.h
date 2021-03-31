@@ -3,8 +3,9 @@
 
 namespace Common
 {
+// 这里以后可能要加锁
 struct Stat {
-    size_t find_goups;
+    size_t find_groups;
     size_t find_pos;
     size_t count;
 
@@ -12,7 +13,7 @@ struct Stat {
         count ++;
     }
     void AddFindGroup() {
-        find_goups ++;
+        find_groups ++;
     }
 
     void AddFindPos() {
