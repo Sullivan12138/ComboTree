@@ -80,6 +80,7 @@ int find_near_pos(uint64_t key) const
  * @return uint64_t 
  */
 uint64_t Find_(uint64_t key) const {
+    Common::stat.ResetFindPos();
     int pos = segment_(key);
     pos = std::min(pos, (int)(nr_entries_ - 1));
     Common::stat.AddFindPos();
@@ -91,6 +92,7 @@ uint64_t Find_(uint64_t key) const {
       pos --;
       for(; pos > 0 && entries_[pos].entry_key > key; pos --) {Common::stat.AddFindPos();};
     }
+    std::cout << "Cost " << Common::stat.GetFindGroups << " steps to find group\n";
     return pos >= 0 ? pos : 0;
 }
 
@@ -562,6 +564,7 @@ public:
      * @return int 
      */
     int FindGroup(uint64_t key) const {
+        Common::stat.ResetFindGroups();
         int pos = model.predict(RMI::Key_64(key));
         pos = std::min(pos, (int)nr_groups_ - 1);
         Common::stat.AddCount();
@@ -589,6 +592,7 @@ public:
             for(; pos > 0 && (groups_[pos + 1] == groups_[pos] || groups_[pos]->min_key > key); pos --) {Common::stat.AddFindGroup();}
         }
 #endif
+        std::cout << "Cost " << Common::stat.GetFindGroups << " steps to find group\n";
         return std::max(pos, 0);
     }
 
