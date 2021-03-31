@@ -92,7 +92,8 @@ uint64_t Find_(uint64_t key) const {
       pos --;
       for(; pos > 0 && entries_[pos].entry_key > key; pos --) {Common::stat.AddFindPos();};
     }
-    std::cout << "Cost " << Common::stat.GetFindGroups << " steps to find group\n";
+    std::cout << "Cost " << Common::stat.GetFindGroups << " steps to find group, " << "nr_groups: "
+        << nr_groups << "\n";
     return pos >= 0 ? pos : 0;
 }
 
@@ -592,7 +593,8 @@ public:
             for(; pos > 0 && (groups_[pos + 1] == groups_[pos] || groups_[pos]->min_key > key); pos --) {Common::stat.AddFindGroup();}
         }
 #endif
-        std::cout << "Cost " << Common::stat.GetFindGroups << " steps to find group\n";
+        std::cout << "Cost " << Common::stat.GetFindGroups << " steps to find group, " << "nr_groups:" 
+           << nr_groups_ << "\n";
         return std::max(pos, 0);
     }
 
