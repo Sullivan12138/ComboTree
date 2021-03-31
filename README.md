@@ -28,4 +28,4 @@ yum install -y intel-mkl -->
 <!-- sudo valgrind --leak-check=full --show-reachable=yes --trace-children=yes -s -->
 **YCSB**
 ./ycsb -db combotree -threads 1 -P ../include/ycsb/workloads/
-./ycsb -db combotree -threads 1 -P ../include/ycsb/insert_ratio/
+nohup ./ycsb -db learngroup -threads 1 -P ../include/ycsb/insert_ratio/ > ../logs/learngroup-256-nvm-all.log &

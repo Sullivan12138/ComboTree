@@ -75,3 +75,5 @@ logs/*
 # *.spec
 *.bak
 *.old
+
+README.md
