@@ -1380,7 +1380,7 @@ public:
 };
 
 // typedef Buncket<256, 8> buncket_t;
-typedef UnSortBuncket<128, 8> buncket_t;  
+typedef UnSortBuncket<256, 8> buncket_t;  
 // c层节点的定义， C层节点需支持Put，Get，Update，Delete
 // C层节点内部需要实现一个Iter作为迭代器，
 
