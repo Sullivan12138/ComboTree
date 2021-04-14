@@ -8,6 +8,10 @@ SET(CMAKE_CXX_COMPILER /usr/local/bin/g++)
 set(MKL_LINK_DIRECTORY "/opt/intel/mkl/lib/intel64")
 set(MKL_INCLUDE_DIRECTORY "/opt/intel/mkl/include")
 
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "/home/tw/libtorch")
+find_package(Torch REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+
 # use `cmake -DSERVER:BOOL=ON ..` when running in server
 option(SERVER           "Run in server"           OFF)
 option(USE_LIBPMEM      "libpmem or libvmmalloc"  ON)
@@ -105,7 +109,7 @@ set(COMBO_TREE_SRC
         src/dnn.h tests/dnn_test.cpp)
 
 add_library(combotree SHARED ${COMBO_TREE_SRC})
-target_link_libraries(combotree pmem pmemobj mkl_rt pthread)
+target_link_libraries(combotree pmem pmemobj mkl_rt pthread "${TORCH_LIBRARIES}")
 
 # benchmark
 add_executable(benchmark tests/benchmark.cc)
@@ -181,6 +185,3 @@ target_link_libraries(ycsb combotree)
 add_test(ycsb ycsb)
 
 ## dnn
-add_executable(dnn tests/dnn_test.cpp)
-target_link_libraries()
-add_test(dnn_test dnn_test)

@@ -708,7 +708,7 @@ private:
     uint64_t max_groups_;
     // RMI::LinearModel<RMI::Key_64> model;
     //RMI::TwoStageRMI<RMI::Key_64, 3, 2> model;
-    Net(1, 200, 1) model;
+    OneLayerDnn<float> model(1, 200, 1);
 #ifdef EXPAND_ALL
     LearnGroup *group_entrys_;
 #else 
