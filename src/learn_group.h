@@ -18,6 +18,7 @@
 #include "common_time.h"
 #include "pointer_bentry.h"
 #include "learnindex/learn_index.h"
+#include "dnn.h"
 
 namespace combotree {
 
@@ -403,7 +404,7 @@ public:
         int expand_keys;
         if(nr_groups_ + expand_groups.size() < max_groups_) {
             if(group_id + 1 < nr_groups_) {
-            memmove(&groups_[group_id + expand_groups.size()], &groups_[group_id + 1], 
+            memmove(&groups_[group_id + expand_groups.size() + 1], &groups_[group_id + 1], 
                 sizeof(LearnGroup *) * (nr_groups_ - group_id - 1 ));
             }
             nr_groups_ += expand_groups.size() - 1;
@@ -696,9 +697,9 @@ public:
     void Info() {
         std::cout << "nr_groups: " << nr_groups_ << "\t";
         std::cout << "Group size:" << sizeof(LearnGroup) << "\t";
-        std::cout << "Find group: " << Common::stat.find_goups << ", " <<  Common::stat.find_pos 
+        std::cout << "Find group: " << Common::stat.find_groups << ", " <<  Common::stat.find_pos 
                << ", " <<  Common::stat.count << std::endl;
-        Common::stat.find_goups = Common::stat.find_pos = Common::stat.count = 0;
+        Common::stat.find_groups = Common::stat.find_pos = Common::stat.count = 0;
         clevel_mem_->Usage();
     }
 
@@ -706,7 +707,8 @@ private:
     uint64_t nr_groups_;
     uint64_t max_groups_;
     // RMI::LinearModel<RMI::Key_64> model;
-    RMI::TwoStageRMI<RMI::Key_64, 3, 2> model;
+    //RMI::TwoStageRMI<RMI::Key_64, 3, 2> model;
+    Net(1, 200, 1) model;
 #ifdef EXPAND_ALL
     LearnGroup *group_entrys_;
 #else 
