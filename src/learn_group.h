@@ -18,6 +18,7 @@
 #include "common_time.h"
 #include "pointer_bentry.h"
 #include "learnindex/learn_index.h"
+#include "dnn.h"
 
 namespace combotree {
 
@@ -706,8 +707,8 @@ private:
     uint64_t nr_groups_;
     uint64_t max_groups_;
     // RMI::LinearModel<RMI::Key_64> model;
-    RMI::TwoStageRMI<RMI::Key_64, 3, 2> model;
-//    Net(1, 200, 1) model;
+    //RMI::TwoStageRMI<RMI::Key_64, 3, 2> model;
+    Net(1, 200, 1) model;
 #ifdef EXPAND_ALL
     LearnGroup *group_entrys_;
 #else 

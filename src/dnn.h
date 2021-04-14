@@ -40,7 +40,7 @@ struct OneLayerDnn : torch::nn::Module {
         auto t = torch::from_blob(x.data(), x.size(), torch::kFloat);
         t = t.reshape({-1, 1});
         torch::Tensor prediction = this->forward(t);
-        std::cout << "predict2: " << prediction[0][0] << std::endl;
+//        std::cout << "predict2: " << prediction[0][0] << std::endl;
         std::vector<float> y(prediction.data_ptr<float>(), prediction.data_ptr<float>() + prediction.numel());
         return (int)(y[0] * length);
     }
@@ -70,17 +70,17 @@ struct OneLayerDnn : torch::nn::Module {
             torch::Tensor loss = torch::mse_loss(prediction, y);
             loss.backward();
             optimizer.step();
-            if(t2 % 5 == 0) {
-                std::cout << "loss: " << loss.item<double>() << std::endl;
-            }
-            if(t2 == 400) {
-                optimizer.zero_grad();
-                prediction = this->forward(x);
+  //          if(t2 % 5 == 0) {
+    //            std::cout << "loss: " << loss.item<double>() << std::endl;
+      //      }
+ //           if(t2 == 400) {
+ //               optimizer.zero_grad();
+//                prediction = this->forward(x);
 //                std::vector<float> y2(prediction.data_ptr<float>(), prediction.data_ptr<float>() + prediction.numel());
-                std::cout << "length: " << length << std::endl;
-                std::cout << "predict:" << prediction[0][0] << std::endl;
-                std::cout << "real: " << y[0][0]  << std::endl;
-            }
+//                std::cout << "length: " << length << std::endl;
+//                std::cout << "predict:" << prediction[0][0] << std::endl;
+//                std::cout << "real: " << y[0][0]  << std::endl;
+ //           }
         }
 
     }
