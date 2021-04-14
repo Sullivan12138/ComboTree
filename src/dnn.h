@@ -20,7 +20,7 @@ struct OneLayerDnn : torch::nn::Module {
         // Construct and register two Linear submodules.
         fc1 = register_module("fc1", torch::nn::Linear(n_features, n_hidden));
         fc2 = register_module("fc2", torch::nn::Linear(n_hidden, n_output));
-        max_num = 0;
+        // max_num = 0;
         length = 0;
     }
 
