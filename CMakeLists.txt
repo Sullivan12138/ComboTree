@@ -102,7 +102,7 @@ set(COMBO_TREE_SRC
       src/clevel.cc
       src/combotree.cc
       src/pmemkv.cc
-)
+        src/dnn.h tests/dnn_test.cpp)
 
 add_library(combotree SHARED ${COMBO_TREE_SRC})
 target_link_libraries(combotree pmem pmemobj mkl_rt pthread)
@@ -179,3 +179,8 @@ add_test(microbench microbench)
 add_executable(ycsb tests/ycsb.cc)
 target_link_libraries(ycsb combotree)
 add_test(ycsb ycsb)
+
+## dnn
+add_executable(dnn tests/dnn_test.cpp)
+target_link_libraries()
+add_test(dnn_test dnn_test)
