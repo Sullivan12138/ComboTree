@@ -1174,6 +1174,7 @@ public:
         }
         assert(key(sorted_index_[0]) < split_key);
         next = new (mem->Allocate<UnSortBuncket>()) UnSortBuncket(split_key, prefix_len);
+        // next = new (NVM::data_alloc->alloc(sizeof(UnSortBuncket))) UnSortBuncket(split_key, prefix_len);
         // int idx = 0;
         prefix_len = 0;
         int idx = 0;
@@ -1379,7 +1380,7 @@ public:
 };
 
 // typedef Buncket<256, 8> buncket_t;
-typedef UnSortBuncket<256, 8> buncket_t;  
+typedef UnSortBuncket<128, 8> buncket_t;  
 // c层节点的定义， C层节点需支持Put，Get，Update，Delete
 // C层节点内部需要实现一个Iter作为迭代器，
 
@@ -1395,6 +1396,7 @@ public:
     ALWAYS_INLINE bool HasSetup() const { return !(pointer_[0] & 1); };
 
     void Setup(CLevel::MemControl* mem, uint64_t key, int prefix_len) {
+//        buncket_t *buncket = new (NVM::data_alloc->alloc(sizeof(buncket_t))) buncket_t(key, prefix_len);
         buncket_t *buncket = new (mem->Allocate<buncket_t>()) buncket_t(key, prefix_len);
         uint64_t pointer = (uint64_t)(buncket) - mem->BaseAddr();
         memcpy(pointer_, &pointer, sizeof(pointer_));

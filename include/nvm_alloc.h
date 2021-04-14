@@ -49,11 +49,15 @@ public:
     void Info() {}
     
     void Free(void *p, size_t size) {
+        if (p == nullptr) return;
         free(p);
+        p = nullptr;
     }
 
     void Free(void *p) {
+        if (p == nullptr) return;
         free(p);
+        p = nullptr;
     }
 };
 #else
