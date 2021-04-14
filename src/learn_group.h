@@ -401,7 +401,7 @@ public:
         int expand_keys;
         if(nr_groups_ + expand_groups.size() < max_groups_) {
             if(group_id + 1 < nr_groups_) {
-            memmove(&groups_[group_id + expand_groups.size()], &groups_[group_id + 1], 
+            memmove(&groups_[group_id + expand_groups.size() + 1], &groups_[group_id + 1], 
                 sizeof(LearnGroup *) * (nr_groups_ - group_id - 1 ));
             }
             nr_groups_ += expand_groups.size() - 1;
@@ -705,6 +705,7 @@ private:
     uint64_t max_groups_;
     // RMI::LinearModel<RMI::Key_64> model;
     RMI::TwoStageRMI<RMI::Key_64, 3, 2> model;
+//    Net(1, 200, 1) model;
 #ifdef EXPAND_ALL
     LearnGroup *group_entrys_;
 #else 
