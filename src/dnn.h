@@ -14,13 +14,12 @@
 //#include "matplotlibcpp.h"
 // Define a new Module.
 namespace combotree {
-    template <class key_t>
 struct OneLayerDnn : torch::nn::Module {
     OneLayerDnn(size_t n_features, size_t n_hidden, size_t n_output) {
         // Construct and register two Linear submodules.
         fc1 = register_module("fc1", torch::nn::Linear(n_features, n_hidden));
         fc2 = register_module("fc2", torch::nn::Linear(n_hidden, n_output));
-        // max_num = 0;
+        max_num = 0;
         length = 0;
     }
 
@@ -35,8 +34,8 @@ struct OneLayerDnn : torch::nn::Module {
 
 
 
-    int predict(key_t key) {
-        std::vector<key_t> x({key});
+    int predict(uint64_t key) {
+        std::vector<uint64_t> x({key});
         auto t = torch::from_blob(x.data(), x.size(), torch::kFloat);
         t = t.reshape({-1, 1});
         torch::Tensor prediction = this->forward(t);
@@ -45,8 +44,8 @@ struct OneLayerDnn : torch::nn::Module {
         return (int)(y[0] * length);
     }
 
-    void init(typename std::vector<key_t>::iterator begin, typename std::vector<key_t>::iterator end) {
-        std::vector<key_t> raw_keys;
+    void init(typename std::vector<uint64_t>::iterator begin, typename std::vector<uint64_t>::iterator end) {
+        std::vector<uint64_t> raw_keys;
         raw_keys.assign(begin, end);
         length = raw_keys.size();
         std::sort(raw_keys.begin(), raw_keys.end());
@@ -86,7 +85,7 @@ struct OneLayerDnn : torch::nn::Module {
     }
     // Use one of many "standard library" modules.
     torch::nn::Linear fc1{nullptr}, fc2{nullptr};
-    key_t max_num;
+    uint64_t max_num;
     size_t length;
 };
 }
